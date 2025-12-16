@@ -3,6 +3,7 @@ const app=express();
 const path=require("path");
 const mongoose=require("mongoose");
 const Listing=require("./models/listings.js");
+const ejsMate=require("ejs-mate");
 let port=8080;
 const methodOverride=require("method-override");
 app.use(methodOverride("_method"));
@@ -70,3 +71,5 @@ app.delete("/listings/:id",async(req,res)=>{
   await  Listing.findByIdAndDelete(id);
     res.redirect("/listings");
 })
+
+
