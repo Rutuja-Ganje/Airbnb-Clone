@@ -9,10 +9,18 @@ const listingSchema=new Schema({
     description:{
         type:String
     },
-    img:{
+    image:
+    
+    {
+        filename:{
         type:String,
-        default:"https://unsplash.com/photos/sunset-over-a-field-of-tall-grass-H03NctJ4z7A",
-        set:(v)=> v===" "? "https://unsplash.com/photos/sunset-over-a-field-of-tall-grass-H03NctJ4z7A":v,
+        default:"listingimage"
+    },
+        url:{
+            type:String,
+            default:"https:images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60"
+        }
+        
     },
     price:{
         type:Number

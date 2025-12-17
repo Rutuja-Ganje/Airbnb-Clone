@@ -3,7 +3,7 @@ const app=express();
 const path=require("path");
 const mongoose=require("mongoose");
 const Listing=require("./models/listings.js");
-const ejsMate=require("ejs-mate");
+const engine=require("ejs-mate");
 let port=8080;
 const methodOverride=require("method-override");
 app.use(methodOverride("_method"));
@@ -11,6 +11,7 @@ app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"./view"));
 app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({extended:true}));
+app.engine("ejs",engine);
 app.listen(port,()=>{
     console.log(`listening on port ${port}`);
     
@@ -26,22 +27,29 @@ main().then(()=>{
     console.log(e);
     
 })
+
+//home rote
+
+app.get("/",(req,res)=>{
+    res.send("Hii,I'm Root");
+})
+
 //Index route
 app.get("/listings",async(req,res)=>{
  const allListings=await Listing.find({});
-   res.render("index.ejs",{allListings});    
+   res.render("listing/index.ejs",{allListings});    
    
 })
 //New Route
 app.get("/listings/new",(req,res)=>{
-    res.render("new.ejs");
+    res.render("listing/new.ejs");
 })
 
 //Show Route
 app.get("/listings/:id",async(req,res)=>{
     let {id}=req.params;
     const listing=await Listing.findById(id);
-    res.render("show.ejs",{listing})
+    res.render("listing/show.ejs",{listing})
     
 })
 //Create Route
@@ -55,7 +63,7 @@ res.redirect("/listings")
 app.get("/listings/:id/edit",async(req,res)=>{
     let {id}=req.params;
     const listing=await Listing.findById(id);
-    res.render("edit.ejs",{listing});
+    res.render("listing/edit.ejs",{listing});
 })
 
 //Update Route
